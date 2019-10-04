@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "parcel ./src/index.html",
     "generate": "set NODE_ENV=production&&npm run clear && parcel build ./src/index.html --public-url . --no-cache",
-    "build": "npm run generate && npm run copy",
-    "copy": "ncp ./src/sounds.json ./dist/sounds.json",
+    "build": "npm run generate",
+    "copy": "ncp ./sounds.json ./sounds.json",
     "clear": "rimraf ./dist && rimraf ./.cache",
     "start": "npm run clear && npm run dev"
   },
