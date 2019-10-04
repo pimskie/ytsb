@@ -1,3 +1,4 @@
+import sounds from './sounds.json';
 import Soundboard from './components/soundboard';
 
 const createButton = ({ id, title, start, end }) => {
@@ -12,24 +13,25 @@ const createButton = ({ id, title, start, end }) => {
 	return button;
 };
 
-const boot = async () => {
+const boot = () => {
 	const buttonsContainer = document.querySelector('.js-buttons');
 	const videoContainer = document.querySelector('.js-video');
 
-	const sounds = await fetch('./data/sounds.json').then(res => res.json());
 	const sb = new Soundboard(videoContainer);
 
-	window.onYouTubeIframeAPIReady = () => { sb.youtubeReady() };
+	window.onYouTubeIframeAPIReady = () => {
+		sounds.forEach((sound) => {
+			const button = createButton(sound);
 
-	sounds.forEach((sound) => {
-		const button = createButton(sound);
+			button.addEventListener('click', () => {
+				sb.playSound(button.dataset);
+			});
 
-		button.addEventListener('click', () => {
-			sb.playSound(button.dataset);
+			buttonsContainer.appendChild(button);
 		});
 
-		buttonsContainer.appendChild(button);
-	});
+		sb.youtubeReady();
+	};
 };
 
 
